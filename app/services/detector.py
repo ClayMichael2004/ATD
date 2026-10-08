@@ -19,11 +19,7 @@ class DetectionService:
         self.tokenizer: Optional[AutoTokenizer] = None
         self.model: Optional[AutoModelForSequenceClassification] = None
         self.device: str = "cpu"
-        self._is_loaded: bool = False
-
-    @property
-    def is_loaded(self) -> bool:
-        return self._is_loaded
+        self.is_loaded: bool = False
 
     def determine_device(self) -> str:
         configured = self.settings.DEVICE.lower()
@@ -52,19 +48,19 @@ class DetectionService:
         ).to(self.device)
         self.model.eval()
 
-        self._is_loaded = True
+        self.is_loaded = True
         logger.info(f"Model and tokenizer successfully loaded on device: {self.device}")
 
     def unload(self) -> None:
         self.tokenizer = None
         self.model = None
-        self._is_loaded = False
+        self.is_loaded = False
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
         logger.info("Model and tokenizer unloaded from memory.")
 
     def detect(self, text: str) -> dict[str, Any]:
-        if not self._is_loaded or self.model is None or self.tokenizer is None:
+        if not self.is_loaded or self.model is None or self.tokenizer is None:
             raise RuntimeError("Model is not loaded. Call load_model() before performing inference.")
 
         cleaned_text = text.strip()
