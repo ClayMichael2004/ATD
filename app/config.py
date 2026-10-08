@@ -12,21 +12,22 @@ load_dotenv(BASE_DIR / ".env")
 class Settings:
     """Application settings loaded from environment variables with sensible defaults."""
 
-    APP_NAME: str = os.getenv("APP_NAME", "AI Text Detection Engine")
-    APP_VERSION: str = os.getenv("APP_VERSION", "1.0.0")
-    APP_ENV: str = os.getenv("APP_ENV", "development")
-    DEBUG: bool = os.getenv("DEBUG", "true").lower() in ("true", "1", "yes")
+    def __init__(self) -> None:
+        self.APP_NAME: str = os.getenv("APP_NAME", "AI Text Detection Engine")
+        self.APP_VERSION: str = os.getenv("APP_VERSION", "1.0.0")
+        self.APP_ENV: str = os.getenv("APP_ENV", "development")
+        self.DEBUG: bool = os.getenv("DEBUG", "true").lower() in ("true", "1", "yes")
 
-    HOST: str = os.getenv("HOST", "0.0.0.0")
-    PORT: int = int(os.getenv("PORT", "8000"))
+        self.HOST: str = os.getenv("HOST", "0.0.0.0")
+        self.PORT: int = int(os.getenv("PORT", "8000"))
 
-    # Model and Tokenizer settings
-    MODEL_PATH: str = os.getenv("MODEL_PATH", str(BASE_DIR / "saved_ai_detector"))
-    MAX_SEQUENCE_LENGTH: int = int(os.getenv("MAX_SEQUENCE_LENGTH", "512"))
-    DEVICE: str = os.getenv("DEVICE", "auto")
+        # Model and Tokenizer settings
+        self.MODEL_PATH: str = os.getenv("MODEL_PATH", str(BASE_DIR / "saved_ai_detector"))
+        self.MAX_SEQUENCE_LENGTH: int = int(os.getenv("MAX_SEQUENCE_LENGTH", "512"))
+        self.DEVICE: str = os.getenv("DEVICE", "auto")
 
-    # CORS settings
-    _cors_raw: str = os.getenv("CORS_ORIGINS", "*")
+        # CORS settings
+        self._cors_raw: str = os.getenv("CORS_ORIGINS", "*")
 
     @property
     def cors_origins(self) -> list[str]:
