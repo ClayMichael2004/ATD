@@ -1,0 +1,32 @@
+# Git and metadata
+.git
+.gitignore
+.github
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Python cache and bytecode
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Tests and coverage
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation and editors
+.vscode/
+.idea/
+*.md
+!saved_ai_detector/README.md
